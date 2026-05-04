@@ -12,7 +12,6 @@ class BasePage:
         self.wait = WebDriverWait(driver, 10)
 
     def find_element(self, locator):
-        """Find element by locator."""
         return self.wait.until(EC.presence_of_element_located(locator))
 
     def find_elements(self, locator, timeout: int = 5):
@@ -24,9 +23,6 @@ class BasePage:
             return []
 
     def click_element(self, locator):
-        """
-        Click element (Đã nâng cấp: Chống lỗi bị che khuất phần tử).
-        """
         try:
             element = self.wait.until(EC.element_to_be_clickable(locator))
             self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
@@ -41,16 +37,12 @@ class BasePage:
         self.clear_and_send_keys(locator, text)
 
     def clear_and_send_keys(self, locator, text):
-        """
-        Clear a field and type text into it.
-        (Đã nâng cấp: Dùng tổ hợp phím để xóa sạch dữ liệu cứng đầu).
-        """
+
         element = self.find_element(locator)
         
         element.clear()
         
         element.send_keys(Keys.CONTROL + "a")
         element.send_keys(Keys.DELETE)
-        
-        # Bước 3: Gõ chữ mới vào
+
         element.send_keys(text)
