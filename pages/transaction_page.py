@@ -29,7 +29,7 @@ class TransactionPage(BasePage):
         self.url = f"{base_url.rstrip('/')}/transactions"
 
     def load(self):
-        """Load the transaction management page."""
+
         self.driver.get(self.url)
 
     def click_remind_button(self):
@@ -50,7 +50,6 @@ class TransactionPage(BasePage):
         time.sleep(0.5)
 
     def is_remind_button_disabled(self):
-        """Kiểm tra xem nút nhắc nhở có bị disable sau khi gửi không"""
         try:
             btn = self.find_element(self.BTN_REMIND)
             classes = btn.get_attribute("class")
@@ -93,7 +92,6 @@ class TransactionPage(BasePage):
         time.sleep(0.5)
 
     def get_success_message(self):
-        """Lấy text từ popup thông báo thành công của SweetAlert2"""
         try:
             title = self.find_element(self.SUCCESS_MESSAGE).text
             try:
@@ -105,7 +103,6 @@ class TransactionPage(BasePage):
             return None
 
     def get_transaction_count(self):
-        """Đếm số lượng giao dịch hiện có trong bảng"""
         try:
             rows = self.find_elements(self.TABLE_ROWS)
             return len(rows) if rows else 0

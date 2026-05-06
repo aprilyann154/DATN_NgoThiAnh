@@ -31,11 +31,9 @@ class BorrowPage(BasePage):
         self.url = f"{self.base_url}/books" 
 
     def load(self):
-        """Load trang danh sách sách."""
         self.driver.get(self.url)
 
     def click_register_borrow(self, index=0):
-        """Tìm và click vào nút 'Đăng ký mượn' bằng JavaScript để chống lỗi bị che khuất"""
         buttons = self.wait.until(EC.presence_of_all_elements_located((By.XPATH, "//button[contains(., 'Đăng ký mượn')]")))
         
         if buttons and len(buttons) > index:
@@ -44,32 +42,24 @@ class BorrowPage(BasePage):
             raise Exception(f"Không tìm thấy nút 'Đăng ký mượn' ở vị trí {index}")
 
     def set_borrow_dates(self, borrow_date, return_date):
-        """Điền ngày mượn và ngày trả."""
         self.clear_and_send_keys(self.BORROW_DATE_FIELD, borrow_date)
         self.clear_and_send_keys(self.RETURN_DATE_FIELD, return_date)
 
     def set_quantity(self, quantity):
-        """Nhập số lượng mượn trực tiếp vào ô input."""
         self.clear_and_send_keys(self.QUANTITY_INPUT, str(quantity))
 
     def click_borrow_now(self):
-        """Nhấn nút 'Mượn ngay' để chuyển sang bước kiểm tra nội quy."""
         self.click_element(self.BORROW_NOW_BUTTON)
 
     def confirm_rules_and_submit(self):
-        """Tích chọn ô đồng ý nội quy và nhấn Xác nhận."""
         self.click_element(self.CONFIRM_CHECKBOX)
         self.click_element(self.CONFIRM_BORROW_BUTTON)
         
     def click_back_button(self):
-        """Nhấn nút Quay lại trong popup xác nhận."""
         self.click_element(self.BACK_BUTTON)
 
     def borrow_book(self, borrow_date, return_date, quantity=1, book_index=0):
-        """
-        Flow thao tác tự động mượn sách hoàn chỉnh.
-        Lưu ý: Không truyền tham số borrower_name vì giao diện không có ô chọn người mượn.
-        """
+
         self.click_register_borrow(book_index)
         time.sleep(1) 
         
@@ -81,7 +71,6 @@ class BorrowPage(BasePage):
         self.confirm_rules_and_submit()
 
     def is_borrow_successful(self):
-        """Kiểm tra có hiển thị thông báo mượn thành công hay không."""
         try:
             self.find_element(self.SUCCESS_MESSAGE)
             return True
