@@ -8,11 +8,7 @@ from .base_page import BasePage
 
 class BookPage(BasePage):
 
-    def __init__(self, driver, base_url=None):
-        super().__init__(driver)
-        self.base_url = base_url
-
-    ADD_BUTTON = (By.XPATH, "//button[contains(@onclick, 'openAddModal')]") # Tìm đích danh nút mở Modal
+    ADD_BUTTON = (By.XPATH, "//button[contains(@onclick, 'openAddModal')]") 
     SEARCH_INPUT = (By.XPATH, "//input[contains(@placeholder, 'Tìm tên sách')]")
     
     TITLE_INPUT = (By.ID, "bTitle")
@@ -28,6 +24,11 @@ class BookPage(BasePage):
 
     CONFIRM_DELETE_BTN = (By.XPATH, "//button[contains(., 'Xóa ngay')]")
     CANCEL_DELETE_BTN = (By.XPATH, "//button[contains(., 'Hủy bỏ')]")
+
+    def __init__(self, driver, base_url: str = "http://localhost:3000"):
+        super().__init__(driver)
+        self.base_url = base_url.rstrip('/')
+        self.url = f"{self.base_url}/books" 
 
     def click_add_book_button(self):
         element = self.wait.until(EC.element_to_be_clickable(self.ADD_BUTTON))
@@ -104,12 +105,10 @@ class BookPage(BasePage):
             return False
 
     def confirm_delete(self):
-        """Bấm nút Xóa ngay"""
         btn = self.wait.until(EC.element_to_be_clickable(self.CONFIRM_DELETE_BTN))
         self.driver.execute_script("arguments[0].click();", btn)
 
     def cancel_delete(self):
-        """Bấm nút Hủy bỏ riêng của popup Xóa"""
         btn = self.wait.until(EC.element_to_be_clickable(self.CANCEL_DELETE_BTN))
         self.driver.execute_script("arguments[0].click();", btn)
 
@@ -122,7 +121,6 @@ class BookPage(BasePage):
         time.sleep(1.5)
 
     def get_books_from_table(self):
-        """Sửa lại: Chỉ đếm những dòng sách CÓ HIỂN THỊ trên màn hình"""
         try:
             rows = self.find_elements((By.XPATH, "//table/tbody/tr"))
             visible_rows = [row for row in rows if row.is_displayed()]
