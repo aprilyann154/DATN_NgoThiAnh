@@ -6,7 +6,6 @@ from selenium.common.exceptions import TimeoutException, ElementClickIntercepted
 from selenium.webdriver.common.keys import Keys
 
 class BasePage:
-    # FIX: Tăng timeout mặc định từ 5 lên 15 giây
     DEFAULT_TIMEOUT = 15
 
     def __init__(self, driver):

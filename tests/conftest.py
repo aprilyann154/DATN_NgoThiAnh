@@ -73,7 +73,6 @@ def driver():
     edge_options.add_argument("--disable-gpu")
     edge_options.add_argument("--no-sandbox")
     edge_options.add_argument("--disable-dev-shm-usage")
-    # SPA (React/Vue) dùng "eager" thay vì "normal"
     edge_options.page_load_strategy = "eager"
     edge_options.add_experimental_option(
         "excludeSwitches", ["enable-automation", "enable-logging"]
