@@ -24,9 +24,6 @@ class BasePage:
             return []
 
     def click_element(self, locator):
-        """
-        Click element (Đã nâng cấp: Chống lỗi bị che khuất phần tử).
-        """
         try:
             element = self.wait.until(EC.element_to_be_clickable(locator))
             self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
@@ -41,10 +38,6 @@ class BasePage:
         self.clear_and_send_keys(locator, text)
 
     def clear_and_send_keys(self, locator, text):
-        """
-        Clear a field and type text into it.
-        (Đã nâng cấp: Dùng tổ hợp phím để xóa sạch dữ liệu cứng đầu).
-        """
         element = self.find_element(locator)
         
         element.clear()

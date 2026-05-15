@@ -38,12 +38,11 @@ class TestBookManagement:
         data = tc["data"]
         
         if tc_id == "TC_QLS_001":
-            time.sleep(2) # <--- NHỊP NGHỈ 2: Ép Bot chờ nút "Thêm sách" render xong hoàn toàn
+            time.sleep(2) 
             self.book_page.click_add_book_button()
             assert self.book_page.is_form_open(), "Form Thêm sách không hiển thị"
 
         elif tc_id in ["TC_QLS_002", "TC_QLS_003"]:
-            # Do cần random title để tránh trùng lặp dữ liệu thực tế
             title = data.get('Tên sách', 'Sách Mới') + f" {int(time.time())}"
             book_data = {
                 'title': title,
@@ -109,7 +108,6 @@ class TestBookManagement:
             time.sleep(1.5)
             assert self.book_page.book_exists_in_table(updated_title)
 
-        # TC_QLS_010: Bỏ trống trường bắt buộc
         elif tc_id == "TC_QLS_010":
             self.book_page.click_edit_book(0)
             title_field = self.book_page.find_element(self.book_page.TITLE_INPUT)
@@ -117,7 +115,6 @@ class TestBookManagement:
             self.book_page.submit_book_form()
             assert title_field.get_attribute("validationMessage") != ""
 
-        # TC_QLS_011: Định dạng sai
         elif tc_id == "TC_QLS_011":
             self.book_page.click_edit_book(0)
             self.book_page.fill_book_form({'quantity': 'abc'})
@@ -125,7 +122,6 @@ class TestBookManagement:
             qty_element = self.book_page.find_element(self.book_page.QTY_INPUT)
             assert qty_element.get_attribute("validationMessage") != ""
 
-        # TC_QLS_012: Hủy sửa
         elif tc_id == "TC_QLS_012":
             original_title = self.book_page.find_element((By.XPATH, "//table/tbody/tr[1]/td[2]")).text
             self.book_page.click_edit_book(0)

@@ -41,17 +41,14 @@ class LoginPage(BasePage):
             self.send_keys_to_element(self.PASSWORD_FIELD, password)
             
         self.click_element(self.LOGIN_BUTTON)
-        time.sleep(1) # Chờ điều hướng
+        time.sleep(1) 
 
     def load_and_login(self, username, password):
-        """Gộp cả load và login vào một hàm tiện ích."""
         self.load()
         self.login(username, password)
 
     def get_error_message(self):
-        """Lấy text thông báo lỗi đỏ trên giao diện."""
         try:
-            # Đợi tối đa 5 giây cho đến khi thông báo lỗi xuất hiện trên màn hình
             from selenium.webdriver.support import expected_conditions as EC
             from selenium.webdriver.support.ui import WebDriverWait
             
@@ -60,28 +57,22 @@ class LoginPage(BasePage):
             )
             return element.text
         except TimeoutException:
-            # Nếu sau 5 giây vẫn không thấy lỗi đâu thì mới trả về None
             return None
 
     def is_login_successful(self):
-        """Kiểm tra thành công bằng cách nhìn vào sự thay đổi của URL."""
         try:
-            # Chờ cho đến khi URL không còn chứa chữ '/login'
             self.wait.until(lambda driver: "/login" not in driver.current_url)
             return True
         except TimeoutException:
             return False
 
     def click_signup_link(self):
-        """Bấm link Đăng ký ngay."""
         self.click_element(self.SIGNUP_LINK)
 
     def click_forgot_password_link(self):
-        """Bấm link Quên mật khẩu."""
         self.click_element(self.FORGOT_PASSWORD_LINK)
 
     def is_on_signup_page(self):
-        """Kiểm tra xem đã sang trang Đăng ký chưa."""
         try:
             self.wait.until(lambda driver: "/signup" in driver.current_url.lower() or "/register" in driver.current_url.lower())
             return True
@@ -89,7 +80,6 @@ class LoginPage(BasePage):
             return False
 
     def is_on_forgot_password_page(self):
-        """Kiểm tra xem đã sang trang Quên mật khẩu chưa."""
         try:
             self.wait.until(lambda driver: "forgot" in driver.current_url.lower() or "reset" in driver.current_url.lower())
             return True

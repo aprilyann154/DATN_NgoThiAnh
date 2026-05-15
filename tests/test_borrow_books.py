@@ -77,7 +77,7 @@ class TestUserBorrowBooks:
         elif tc_id == "TC_MS_002":
             qty_input = self.borrow_page.find_element(self.borrow_page.QUANTITY_INPUT)
             qty_input.send_keys(Keys.CONTROL + "a")
-            qty_input.send_keys("0") # Cố tình nhập sai như kịch bản
+            qty_input.send_keys("0") 
             qty_input.send_keys(Keys.TAB)
             self.borrow_page.driver.execute_script("arguments[0].click();", self.borrow_page.find_element(self.borrow_page.BORROW_NOW_BUTTON))
             time.sleep(1)
