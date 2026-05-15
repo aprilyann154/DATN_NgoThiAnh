@@ -6,13 +6,11 @@ from selenium.webdriver.common.keys import Keys
 import time
 
 class BasePage:
-
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(driver, 10)
 
     def find_element(self, locator):
-        """Find element by locator."""
         return self.wait.until(EC.presence_of_element_located(locator))
 
     def find_elements(self, locator, timeout: int = 5):
@@ -44,6 +42,5 @@ class BasePage:
         
         element.send_keys(Keys.CONTROL + "a")
         element.send_keys(Keys.DELETE)
-        
-        # Bước 3: Gõ chữ mới vào
+
         element.send_keys(text)
